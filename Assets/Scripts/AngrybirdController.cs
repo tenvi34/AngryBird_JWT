@@ -52,7 +52,7 @@ public class AngrybirdController : MonoBehaviour
         }
         else if (!canLaunch)  // 새를 재발사할 수 없는 상태
         {
-            Debug.Log("장전 중");
+            Debug.Log("Bird is reloading...");
         }
         else  // 새가 아닌 다른 곳에서 드래그 시작
         {
@@ -112,6 +112,6 @@ public class AngrybirdController : MonoBehaviour
     {
         yield return new WaitForSeconds(reloadTime);  // 재발사 대기 시간
         canLaunch = true;  // 새를 발사할 수 있도록 설정
-        Debug.Log("발사 준비 완료!");
+        Debug.Log("Bird is ready to launch again!");
     }
 }
