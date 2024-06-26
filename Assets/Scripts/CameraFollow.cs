@@ -5,10 +5,9 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public static CameraFollow instance;  // 싱글톤 인스턴스
-    public Transform target;  // 카메라가 따라갈 타겟
-    public float smoothSpeed = 0.125f;  // 카메라 이동 속도
-    public Vector3 offset;  // 카메라 오프셋
-    public bool isFollowing = false;  // 카메라가 타겟을 따라가는지 여부
+    public Transform target;  // 카메라가 따라갈 대상
+    public float followSpeed = 2f;  // 카메라가 따라가는 속도
+    public Vector3 offset;  // 카메라의 오프셋
 
     void Awake()
     {
@@ -16,18 +15,18 @@ public class CameraFollow : MonoBehaviour
         {
             instance = this;
         }
-        else
+        else if (instance != this)
         {
             Destroy(gameObject);
         }
     }
 
-    void LateUpdate()
+    void Update()
     {
-        if (isFollowing && target != null)
+        if (target != null)
         {
-            Vector3 desiredPosition = target.position + offset;
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+            Vector3 targetPosition = target.position + offset;
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
             transform.position = smoothedPosition;
         }
     }
@@ -35,11 +34,5 @@ public class CameraFollow : MonoBehaviour
     public void FollowBird(Transform bird)
     {
         target = bird;
-        isFollowing = true;
-    }
-
-    public void StopFollowing()
-    {
-        isFollowing = false;
     }
 }
